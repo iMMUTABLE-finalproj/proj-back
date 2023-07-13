@@ -138,7 +138,7 @@ const ChatSocket = () => {
             "sender":sender,
             "message":"종료 합니다."}));
         ws.current.close();
-       window.localStorage.setItem("chatRoomId", "");
+        window.localStorage.removeItem("chatRoomId");
     }
 
     useEffect(() => {

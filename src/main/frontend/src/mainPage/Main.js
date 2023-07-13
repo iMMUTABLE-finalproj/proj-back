@@ -1,4 +1,4 @@
-import React ,{useState, useEffect}from "react";
+import React ,{useState, useEffect, useContext }from "react";
 import styled, {css} from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import bckimg from "../img/fog.jpg"
@@ -8,7 +8,7 @@ import ChatAxios from "../api/ChatAxios.js";
 import ChatSocket from "../chatPage/ChatSocket.js"
 import ChatEmpty from "../chatPage/ChatEmpty.js"
 import AxiosFinal from "../api/AxiosFinal";
-
+import { UserContext } from "../context/UserInfo";
 
 const Sidemenu = [
     //버튼을 카테고리로 분류하여 값을 쉽게 가져오기 위해 name으로 설정한다.
@@ -337,16 +337,29 @@ const CartToggle=styled.div`
   `
 
 const Main= () =>{
+    //로그인 여부를 받을 CONTEXT API
+    const context = useContext(UserContext);
+    const { isLogin, setIsLogin } = context;
+    //카트 수량을 담을 컴포넌트
     const [count, setCount] = useState([]);
+    //카트 정보를 담을 컴포넌트
     const[cartList, setCartList] = useState([]);
     //카트 토글 여는 컴포넌트
     const [openCart, setOpenCart] = useState(false);
-
+    //사이드바를 여는 컴포넌트
     const [isOpen, setIsOpen] = useState(0);
+    //채팅을 여는 컴포넌트
     const [openChat, setOpenChat] = useState(0);
-
-    const isLogin = window.localStorage.getItem("isLoginSuv");
+    //로그인 정보를 가져 올 로컬스토리지(새로고침을 방지해준다)
+    const isUserLogin = window.localStorage.getItem("isLoginSuv");
+    useEffect(()=>{
+        if(isUserLogin==="TRUE"){
+            setIsLogin(true);
+        }
+    },[isUserLogin])
+    //유저 아이디를 저장할 로컬스토리지
     const id = window.localStorage.getItem("userIdSuv");
+    //아이디 확인
     console.log(id);
 
     //채팅 on/off 컴포넌트
@@ -370,7 +383,8 @@ const Main= () =>{
         }
         else if(e==="logout"){
             window.localStorage.setItem("isLoginSuv", "FALSE");
-            window.localStorage.setItem("userIdSuv", "");
+            setIsLogin(false);
+            window.localStorage.removeItem("userIdSuv");
             window.location.reload();
         }
         else if(e==="SHOP"){
@@ -425,7 +439,7 @@ const Main= () =>{
                 if(rsp.status === 200) {
                     const copyCnt = rsp.data.map(e => e.count);
                     setCartList(rsp.data);
-                    console.log(rsp.data);
+                    console.log("카트리스트 : ", rsp.data);
                     setCount(copyCnt);
                 }
             };
@@ -435,7 +449,7 @@ const Main= () =>{
         const updateCount = async (count, cartList, idx) => {
             const response = await AxiosFinal.updateCount( count, cartList, idx);
             const result = response.data;
-            console.log(result)
+            console.log("카운트 결과 : ", result)
         };
         console.log(cartList)
 
@@ -528,12 +542,12 @@ const Main= () =>{
                         </div>
                         <div className="top2">
 
-                          {isLogin==="FALSE" && IsLoginFalse.map(s=> (
+                          {isLogin===false && IsLoginFalse.map(s=> (
                                         <TopButton key={s.name}>
                                             <Link to="/Login">{s.name}</Link>
                                         </TopButton>
                                     ))}
-                          {isLogin==="TRUE" && IsLoginTrue.map(s=> (
+                          {isLogin===true && IsLoginTrue.map(s=> (
                                         <TopButton key={s.name} onClick={()=>onChangePage(s.name)}>
                                             {s.name}
                                         </TopButton>

@@ -136,29 +136,27 @@ const Container = styled.div`
 
 const AdminLoginModal = (props) => {
     const {open, close} = props;
-    //첫 로그인 값을 false로 바꿔준다 adminpage에서 해주면 새로고침마다 계속 false가 뜨기 때문에 모달 창에서 선언 해준다!
-    window.localStorage.setItem("isLoginAdminPage", "FALSE");
 
-    const [inputId,setInputId] = useState("");    
+    const [inputId,setInputId] = useState("");
     const [inputPw,setInputPw] = useState("");
     //토큰을 담을 contextAPI
     const context = useContext(UserContext);
-    const {setTokenAdmin, setRefreshTokenAdmin} = context;
-
+    const { setRefreshTokenAdmin } = context;
+    //id 입력
     const onChangeId = e => {
         setInputId(e.target.value);
     };
-    //input창에서 pw를 받아옴.
+    //pw 입력
     const onChangePw = (e) => {
         setInputPw(e.target.value)
     };
-
+    //로그인 axios
     const onClickLogin=  async() =>{
         const responseToken = await AxiosFinal.adminTokenLogin(inputId,inputPw);
         console.log(responseToken)
         console.log(responseToken.data);
         //토큰을 넣는다.
-        setTokenAdmin(responseToken.data.accessToken);
+        window.localStorage.setItem("AdminToken", responseToken.data.accessToken);
         setRefreshTokenAdmin(responseToken.data.refreshToken)
         if(responseToken.data.accessToken!==null){
             window.localStorage.setItem("userIdSuv", inputId);

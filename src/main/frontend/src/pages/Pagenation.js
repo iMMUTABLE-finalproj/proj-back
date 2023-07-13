@@ -2,11 +2,14 @@ import styled from "styled-components";
 
 
 const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin: 0px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 `;
 
 const Button = styled.button`

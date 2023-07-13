@@ -20,13 +20,12 @@ const Container = styled.div`
 
 const Mainboby=styled.div`
     margin: 0px 40px 0px 40px;
-    `
+`
 
 const Article = styled.div`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-
 
 `
 
@@ -41,10 +40,16 @@ const Container_in = styled.div`
     }
 
     img{
+        margin-left: 40px;
         height: 400px;
     }
 
+    .info{
+        margin-left: 40px;
+    }
+
     .logo{
+        margin-left: 40px;
         width: 200px;
         font-size: 15px;
         font-weight:bolder;
@@ -52,6 +57,7 @@ const Container_in = styled.div`
     }
 
     .price{
+        margin-left: 40px;
         width: 200px;
         font-size: 10px;
     }
