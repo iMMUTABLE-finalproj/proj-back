@@ -91,17 +91,17 @@ const Products_in=styled.div`
     background-color: rgba(0,0,0,0.1);
   }
 
-   .delete_item{
-          background-color:white;
-          border: none;
-          cursor : pointer;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-left: 10px;
-      }
+  .delete_item{
+    background-color:white;
+    border: none;
+    cursor : pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  }
 
   .product_image{
     display: flex;
@@ -313,7 +313,7 @@ const Cart=()=>{
         console.log(index);
         console.log("삭제");
         const cartItemId =  cartList[index].cartItemId;
-console.log(" ::"  + cartItemId);
+        console.log(" ::"  + cartItemId);
         const rsp = await AxiosFinal.deleteCartItem(id, cartItemId);
         setCartList(rsp.data);
     }
@@ -321,32 +321,32 @@ console.log(" ::"  + cartItemId);
 
     return(
         <Container>
-             <div className="contTop">
-                            <div className="shop">
-                              <Link to="/shop">shop</Link>
-                            </div>
-                            <Link to="/">home</Link>
-                        </div>
+            <div className="contTop">
+                <div className="shop">
+                    <Link to="/shop">shop</Link>
+                </div>
+                <Link to="/">home</Link>
+            </div>
             <MainBody>
 
- <Products>
-                {cartList && cartList.map((e, index)=>(
-                <Products_in key={e.cartItemId}>
-                        <div className="product_image">
-                            <img src ={e.productImgFst} /></div>
-                        <div className="itemName">{e.productName}</div>
-                                 <div className="itemSize">{e.sizeStatus}</div>
+                <Products>
+                    {cartList && cartList.map((e, index)=>(
+                        <Products_in key={e.cartItemId}>
+                            <div className="product_image">
+                                <img src ={e.productImgFst} /></div>
+                            <div className="itemName">{e.productName}</div>
+                            <div className="itemSize">{e.sizeStatus}</div>
                             <div className="count">
-                                            <input type="text" Value={count[index]} />
-                                            <div className="countbutton">
-                                                <button className="plus" onClick={()=>countPlus(index)}>∧</button>
-                                                <button className="minus" onClick={()=>countMinus(index)}>∨</button>
-                                            </div>
-                                        </div>
-                        <div className="price">{(e.setOriginProductPrice * count[index]).toLocaleString()} won</div>
-                        <button className="delete_item" onClick={() => deleteCartItem(id, index)}>x</button>
-                    </Products_in>
-                             ))}
+                                <input type="text" Value={count[index]} />
+                                <div className="countbutton">
+                                    <button className="plus" onClick={()=>countPlus(index)}>∧</button>
+                                    <button className="minus" onClick={()=>countMinus(index)}>∨</button>
+                                </div>
+                            </div>
+                            <div className="price">{(e.setOriginProductPrice * count[index]).toLocaleString()} won</div>
+                            <button className="delete_item" onClick={() => deleteCartItem(id, index)}>x</button>
+                        </Products_in>
+                    ))}
                 </Products>
 
 
