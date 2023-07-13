@@ -148,6 +148,10 @@ const AdminPage=()=>{
         if(isAdminLogin==="TRUE"){
             setOnBlur(false);
             setIsLogin(true);
+        }else if(isAdminLogin==="FALSE"){
+            setOnBlur(true);
+            setIsLogin(false);
+            setOnModal(true);
         }
     },[isAdminLogin])
     console.log(isAdminLogin);
