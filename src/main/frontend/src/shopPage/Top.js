@@ -116,7 +116,7 @@ const Top = () => {
         const getProduct = async() => {
            const rsp = await AxiosFinal.sellitems();
            if (rsp.status === 200) {
-            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'top');
+            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'TOP');
              setProduct(filteredProduct);
         };
        };

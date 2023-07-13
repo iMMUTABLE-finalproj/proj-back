@@ -6,7 +6,6 @@ import side from "../img/side.png"
 import chat from "../img/chat.png"
 import ChatAxios from "../api/ChatAxios.js";
 import ChatSocket from "../chatPage/ChatSocket.js"
-import ChatEmpty from "../chatPage/ChatEmpty.js"
 import AxiosFinal from "../api/AxiosFinal";
 import { UserContext } from "../context/UserInfo";
 
@@ -212,7 +211,7 @@ const Chat =styled.div`
     //채팅 send기능 버튼
     .sendButton{
         width: 100%;
-        height: 70px;
+        height: 100%;
         border: none;
         background-color: #CCC;
         &:hover{
@@ -360,18 +359,17 @@ const Main= () =>{
     //유저 아이디를 저장할 로컬스토리지
     const id = window.localStorage.getItem("userIdSuv");
     //아이디 확인
-    console.log(id);
-
-    //채팅 on/off 컴포넌트
-    const onChat=()=>{
-        if(openChat===0){
-            setOpenChat(650);
-        } else if(openChat===650){
-            setOpenChat(0);
-        }
-    }
+    console.log("접속아이디 : " ,id);
     //상단 메뉴 및 사이드메뉴 클릭시 이동할 페이지와 함수들
     const navigate = useNavigate();
+
+    //해당 값만큼(300) 너비를 주어 사이드 바가 올라올 수 있게 한다.
+    const toggleSidebar = () => {
+       if(isOpen===400) setIsOpen(0);
+       else if(isOpen=== 0) setIsOpen(400);
+       console.log(isOpen) ;
+    };
+    //사이드 메뉴 선택
     const onChangePage=(e)=>{
         console.log(e);
         if(e==="cart"){
@@ -389,7 +387,6 @@ const Main= () =>{
         }
         else if(e==="SHOP"){
             navigate("/Shop");
-            console.log(e);
         }
         else if(e==="mypage"){
             navigate("/Mypage")
@@ -397,20 +394,15 @@ const Main= () =>{
         else if(e==="NOTICE"){
             navigate("/FAQ")
         }
-
     }
-    
-    //해당 값만큼(300) 너비를 주어 사이드 바가 올라올 수 있게 한다.
-    const toggleSidebar = () => {
-        if(isOpen===400){
-            setIsOpen(0);
-        }else if(isOpen=== 0){
-            setIsOpen(400);
-        }
-        console.log(isOpen) ; 
-      };
 
-    //채팅방 입력시 채팅방
+
+    //채팅 on/off 컴포넌트
+    const onChat=()=>{
+        if(openChat===0) setOpenChat(650);
+        else if(openChat===650) setOpenChat(0);
+    }
+    //채팅시작히기 입력시 실행되는 axios통신
     const chatTest = async() => {
         try {
             const res = await ChatAxios.chatRoomOpen("테스트 채팅방");
@@ -418,18 +410,22 @@ const Main= () =>{
             console.log(res.data);
             window.localStorage.setItem("chatRoomId", res.data);
             setOnChatOpen(true);
-//            window.open("/ChatSocket");
         } catch(error) {
             console.log(error);
         }
     }
+    //채팅창 id를 담을 상수
+    const isChatLoginNow =  window.localStorage.getItem("chatRoomId");
     //채팅 화면이 랜더링이 돌아가게하는 컴포넌트
-    const [onChatOpen,setOnChatOpen] = useState("false");
+    const [onChatOpen,setOnChatOpen] = useState(false);
     useEffect(()=>{
-        if(isChatLoginNow != "")setOnChatOpen("true")
-        else if(isChatLoginNow ==="")setOnChatOpen("false")
+        if(isChatLoginNow != null) setOnChatOpen(true)
+        else if(isChatLoginNow === null) setOnChatOpen(false)
     },[isChatLoginNow])
 
+
+
+    //카트
     useEffect(() => {
             const getCartList = async()=>{
                 if(!id) {
@@ -451,10 +447,7 @@ const Main= () =>{
             const result = response.data;
             console.log("카운트 결과 : ", result)
         };
-        console.log(cartList)
-
-
-
+        console.log("카트리스트 : " , cartList)
         // 수량 증가
         const countPlus = (idx) => {
             console.log(idx);
@@ -465,8 +458,6 @@ const Main= () =>{
                 return newCount;
             });
         };
-
-
         // 수량 감소
         const countMinus = (idx) => {
             setCount(prevCount => {
@@ -478,9 +469,6 @@ const Main= () =>{
                 return newCount;
             });
         };
-
-
-
         // 카트 아이템 삭제
         const deleteCartItem = async(id, index) => {
             console.log(index);
@@ -490,7 +478,7 @@ const Main= () =>{
             setCartList(rsp.data);
         }
 
-    const isChatLoginNow =  window.localStorage.getItem("chatRoomId");
+
     return(
         <Container>
             <Side style={{transform: `translateX(${isOpen}px)`}}> 
@@ -566,9 +554,9 @@ const Main= () =>{
                 </Body>
                 <ChatButton onClick={onChat}/>                
                     <Chat style={{height: `${openChat}px`}}>
-                            {onChatOpen === "false" && <ChatSocket/>}
-                            {onChatOpen === "true" && <ChatEmpty/>}
-                            <button className="sendButton" onClick={()=>chatTest()}>채팅 시작하기</button>
+                            {onChatOpen === true && <ChatSocket/>}
+                            {onChatOpen === false && <button className="sendButton" onClick={chatTest}>채팅 시작하기</button>}
+
                     </Chat>
                 <Foot>
                     <div className="topFoot">

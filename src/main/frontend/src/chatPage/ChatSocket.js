@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Container=styled.div`
 .bodyArea{
     width:300px;
-    height:600px;
+    height:100vh;
     display:flex;
     flex-direction: column;
     border: 1px solid black;

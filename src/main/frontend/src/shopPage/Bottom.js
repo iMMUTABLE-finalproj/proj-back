@@ -117,7 +117,7 @@ const Bottom = () => {
         const getProduct = async() => {
            const rsp = await AxiosFinal.sellitems();
            if (rsp.status === 200) {
-            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'bottom');
+            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'BOTTOM');
              setProduct(filteredProduct);
         };
        };
