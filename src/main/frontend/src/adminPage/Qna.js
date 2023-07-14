@@ -2,6 +2,7 @@ import React, { useState, useContext  } from "react";
 import styled, {css} from "styled-components";
 import { UserContext } from "../context/UserInfo";
 import AxiosFinal from "../api/AxiosFinal";
+import { useNavigate } from "react-router-dom";
 
 
 const Container=styled.div`
@@ -125,6 +126,7 @@ const QnaInfo = styled.div`
 
 
 const Qna = () =>{
+    const navigate = useNavigate();
     //제목을 누르면 답변창(accodian)이 생성된다.
     //css에 active를 넘겨줄 값
     const[qnaAccodian, setQnaAccodian] = useState("all"); 
@@ -159,13 +161,18 @@ const Qna = () =>{
             [name]: e.target.value
           })
     }
+    //토큰을 담을 상수
+    const tokenAdmin = window.localStorage.getItem("AdminToken")
     //답변과 답변 상태를 비동기 통신으로 전달.
     const onSubmitQna =async(props)=>{  
         //덜 담긴 정보를 한번 더 랜더링 하여 최종으로 다 담기게 한다.
         setQnaStatue({...qnaStatue});
         // console.log(qnaStatue);
-        const response = AxiosFinal.qnaUploadReply(props,qnaStatue.qnaSelect,qnaStatue.qnaReply);
+        const response = AxiosFinal.qnaUploadReply(props,qnaStatue.qnaSelect,qnaStatue.qnaReply,tokenAdmin);
         console.log("qna 답변 통신 ",response)
+        if(response === 401){
+             navigate("/Admin401Error")
+        }
     }
     return(
 

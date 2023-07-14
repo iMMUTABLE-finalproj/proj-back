@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatListDto {
-    private long chatListId;
-    private long userId;
+    private String roomName;
+    private String userId;
 
 
 }

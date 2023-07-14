@@ -2,6 +2,7 @@ import React ,{ useContext }from "react";
 import styled from "styled-components";
 import { UserContext } from "../context/UserInfo";
 import AxiosFinal from "../api/AxiosFinal";
+import { useNavigate } from "react-router-dom";
 
 
 const Container=styled.div`
@@ -85,17 +86,21 @@ const CustomerInfo = styled.div`
     }
 `
 const  CustomerMan = () =>{
+    const navigate = useNavigate();
     //유저data를 adminpage에서 가져옴
     const context = useContext(UserContext);
     const {customerData,setCustomerData} = context;
-    
+    //토큰을 담을 상수
+    const tokenAdmin = window.localStorage.getItem("AdminToken")
     //고객 삭제 onClick의 ()=>안에 넣어 주어야 함
     const onDeleteCustomer = async(props) =>{ 
         //map의 userID값을 통해서 DB를 갔다온다.
         console.log(props);
-        const response = await AxiosFinal.customerDelete(props);
+        const response = await AxiosFinal.customerDelete(props,tokenAdmin);
         if(response===true){
             onLoadCustomerData();
+        }else if(response === 401){
+            navigate("/Admin401Error")
         }
     }
 

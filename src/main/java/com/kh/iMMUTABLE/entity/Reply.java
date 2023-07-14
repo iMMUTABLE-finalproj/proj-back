@@ -17,11 +17,9 @@ public class Reply {
     @Column(name = "reply_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long replyId;
-
     @Column(nullable = false)
     private String replyComment;
     private LocalDateTime replyDate;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "qna_id")
     private Qna qna;

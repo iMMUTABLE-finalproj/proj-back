@@ -11,24 +11,27 @@ import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     width: 100%;
+    height: 100vh;
     display: flex;    
     flex-direction: column;
 `
+
 const Mainboby=styled.div`
     margin: 0px 40px 0px 40px;
-    `
+`
+
+
 const Article = styled.div`
     display: flex;
     width: 100%;
-    height: 100vh;
     flex-wrap: wrap;
 
 `
+
 const Container_in = styled.div`
-    height: 400px;
+    height: 500px;
     width: 300px;
     margin-left: 10px;
-
 
 
     .blur {
@@ -36,17 +39,24 @@ const Container_in = styled.div`
     }
 
     img{
+        margin-left: 40px;
         height: 400px;
     }
 
+    .info{
+        margin-left: 40px;
+    }
+
     .logo{
+        margin-left: 40px;
         width: 200px;
         font-size: 15px;
         font-weight:bolder;
-    
+
     }
 
     .price{
+        margin-left: 40px;
         width: 200px;
         font-size: 10px;
     }

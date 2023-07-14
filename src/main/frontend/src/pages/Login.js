@@ -19,7 +19,10 @@ const Body = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
+    @media only screen and ( max-width: 390px){
+        width: 350px;
+    }
     .blur {
         filter: blur(5px);
         width: 100%;
@@ -50,7 +53,10 @@ const Body = styled.div`
         &:hover{
             background-color: black;
             color: white;
-        }        
+        }
+        @media only screen and ( max-width: 390px){
+                width: 350px;
+        }
     }
     a{  
         height: 15px;

@@ -44,7 +44,6 @@ public class Product {
     private ProductSellStatus productSellStatus;    // 상품 판매 상태
     @Enumerated(EnumType.STRING)
     private SizeStatus sizeStatus;
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Qna> qnaList = new ArrayList<>();
 

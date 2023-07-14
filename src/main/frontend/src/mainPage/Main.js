@@ -1,4 +1,4 @@
-import React ,{useState, useEffect}from "react";
+import React ,{useState, useEffect, useContext }from "react";
 import styled, {css} from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import bckimg from "../img/fog.jpg"
@@ -6,9 +6,8 @@ import side from "../img/side.png"
 import chat from "../img/chat.png"
 import ChatAxios from "../api/ChatAxios.js";
 import ChatSocket from "../chatPage/ChatSocket.js"
-import ChatEmpty from "../chatPage/ChatEmpty.js"
 import AxiosFinal from "../api/AxiosFinal";
-
+import { UserContext } from "../context/UserInfo";
 
 const Sidemenu = [
     //버튼을 카테고리로 분류하여 값을 쉽게 가져오기 위해 name으로 설정한다.
@@ -104,6 +103,9 @@ const Head = styled.div`
         padding: 0 20px 0 10px;
         display: flex;
         justify-content: space-between;
+        @media only screen and ( max-width: 390px){
+           flex-direction: column;
+        }
     }
     .top1{
         height: 70px;
@@ -203,12 +205,15 @@ const Chat =styled.div`
     bottom: 6rem;
     right: 2rem;
     background-color: rgba(255,255,255,0.8);
-    border-left: 2px solid #CCC;
     //그래야 안에 들어간 컨텐츠들이 사라진다.
     overflow: hidden;
     transition: height 0.35s ease;
     display: flex;
     flex-direction: column;
+     @media only screen and ( max-width: 390px){
+            right: 3rem;
+            bottom: 3.5em;
+        }
     //채팅 send기능 버튼
     .sendButton{
         width: 100%;
@@ -220,7 +225,6 @@ const Chat =styled.div`
         color:white;
         }
     }
-
 `
 //채팅 on/off버튼
 const ChatButton=styled.button`
@@ -235,6 +239,10 @@ const ChatButton=styled.button`
     background-position: 40%;
     border: none;
     background-color: white;
+    @media only screen and ( max-width: 390px){
+        right: 1rem;
+        bottom: 0.3rem;
+    }
 `
 
 //카트 영역
@@ -338,28 +346,40 @@ const CartToggle=styled.div`
   `
 
 const Main= () =>{
+    //로그인 여부를 받을 CONTEXT API
+    const context = useContext(UserContext);
+    const { isLogin, setIsLogin } = context;
+    //카트 수량을 담을 컴포넌트
     const [count, setCount] = useState([]);
+    //카트 정보를 담을 컴포넌트
     const[cartList, setCartList] = useState([]);
     //카트 토글 여는 컴포넌트
     const [openCart, setOpenCart] = useState(false);
-
+    //사이드바를 여는 컴포넌트
     const [isOpen, setIsOpen] = useState(0);
+    //채팅을 여는 컴포넌트
     const [openChat, setOpenChat] = useState(0);
-
-    const isLogin = window.localStorage.getItem("isLoginSuv");
-    const id = window.localStorage.getItem("userIdSuv");
-    console.log(id);
-
-    //채팅 on/off 컴포넌트
-    const onChat=()=>{
-        if(openChat===0){
-            setOpenChat(650);
-        } else if(openChat===650){
-            setOpenChat(0);
+    //로그인 정보를 가져 올 로컬스토리지(새로고침을 방지해준다)
+    const isUserLogin = window.localStorage.getItem("isLoginSuv");
+    useEffect(()=>{
+        if(isUserLogin==="TRUE"){
+            setIsLogin(true);
         }
-    }
+    },[isUserLogin])
+    //유저 아이디를 저장할 로컬스토리지
+    const id = window.localStorage.getItem("userIdSuv");
+    //아이디 확인
+    console.log("접속아이디 : " ,id);
     //상단 메뉴 및 사이드메뉴 클릭시 이동할 페이지와 함수들
     const navigate = useNavigate();
+
+    //해당 값만큼(300) 너비를 주어 사이드 바가 올라올 수 있게 한다.
+    const toggleSidebar = () => {
+       if(isOpen===400) setIsOpen(0);
+       else if(isOpen=== 0) setIsOpen(400);
+       console.log(isOpen) ;
+    };
+    //사이드 메뉴 선택
     const onChangePage=(e)=>{
         console.log(e);
         if(e==="cart"){
@@ -371,12 +391,12 @@ const Main= () =>{
         }
         else if(e==="logout"){
             window.localStorage.setItem("isLoginSuv", "FALSE");
-            window.localStorage.setItem("userIdSuv", "");
+            setIsLogin(false);
+            window.localStorage.removeItem("userIdSuv");
             window.location.reload();
         }
         else if(e==="SHOP"){
             navigate("/Shop");
-            console.log(e);
         }
         else if(e==="mypage"){
             navigate("/Mypage")
@@ -384,20 +404,15 @@ const Main= () =>{
         else if(e==="NOTICE"){
             navigate("/FAQ")
         }
-
     }
-    
-    //해당 값만큼(300) 너비를 주어 사이드 바가 올라올 수 있게 한다.
-    const toggleSidebar = () => {
-        if(isOpen===400){
-            setIsOpen(0);
-        }else if(isOpen=== 0){
-            setIsOpen(400);
-        }
-        console.log(isOpen) ; 
-      };
 
-    //채팅방 입력시 채팅방
+
+    //채팅 on/off 컴포넌트
+    const onChat=()=>{
+        if(openChat===0) setOpenChat(650);
+        else if(openChat===650) setOpenChat(0);
+    }
+    //채팅시작히기 입력시 실행되는 axios통신
     const chatTest = async() => {
         try {
             const res = await ChatAxios.chatRoomOpen("테스트 채팅방");
@@ -405,17 +420,23 @@ const Main= () =>{
             console.log(res.data);
             window.localStorage.setItem("chatRoomId", res.data);
             setOnChatOpen(true);
-//            window.open("/ChatSocket");
+            const roomData = await ChatAxios.saveChatData(window.localStorage.getItem("chatRoomId"),window.localStorage.getItem("userIdSuv"));
         } catch(error) {
             console.log(error);
         }
     }
-
-    const [onChatOpen,setOnChatOpen] = useState("false");
+    //채팅창 id를 담을 상수
+    const isChatLoginNow =  window.localStorage.getItem("chatRoomId");
+    //채팅 화면이 랜더링이 돌아가게하는 컴포넌트
+    const [onChatOpen,setOnChatOpen] = useState(false);
     useEffect(()=>{
-        setOnChatOpen("true")
-    },[onChatOpen])
+        if(isChatLoginNow != null) setOnChatOpen(true)
+        else if(isChatLoginNow === null) setOnChatOpen(false)
+    },[isChatLoginNow])
 
+
+
+    //카트
     useEffect(() => {
             const getCartList = async()=>{
                 if(!id) {
@@ -425,7 +446,7 @@ const Main= () =>{
                 if(rsp.status === 200) {
                     const copyCnt = rsp.data.map(e => e.count);
                     setCartList(rsp.data);
-                    console.log(rsp.data);
+                    console.log("카트리스트 : ", rsp.data);
                     setCount(copyCnt);
                 }
             };
@@ -435,12 +456,9 @@ const Main= () =>{
         const updateCount = async (count, cartList, idx) => {
             const response = await AxiosFinal.updateCount( count, cartList, idx);
             const result = response.data;
-            console.log(result)
+            console.log("카운트 결과 : ", result)
         };
-        console.log(cartList)
-
-
-
+        console.log("카트리스트 : " , cartList)
         // 수량 증가
         const countPlus = (idx) => {
             console.log(idx);
@@ -451,8 +469,6 @@ const Main= () =>{
                 return newCount;
             });
         };
-
-
         // 수량 감소
         const countMinus = (idx) => {
             setCount(prevCount => {
@@ -464,9 +480,6 @@ const Main= () =>{
                 return newCount;
             });
         };
-
-
-
         // 카트 아이템 삭제
         const deleteCartItem = async(id, index) => {
             console.log(index);
@@ -476,7 +489,7 @@ const Main= () =>{
             setCartList(rsp.data);
         }
 
-    const isChatLoginNow =  window.localStorage.getItem("chatRoomId");
+
     return(
         <Container>
             <Side style={{transform: `translateX(${isOpen}px)`}}> 
@@ -528,12 +541,12 @@ const Main= () =>{
                         </div>
                         <div className="top2">
 
-                          {isLogin==="FALSE" && IsLoginFalse.map(s=> (
+                          {isLogin===false && IsLoginFalse.map(s=> (
                                         <TopButton key={s.name}>
                                             <Link to="/Login">{s.name}</Link>
                                         </TopButton>
                                     ))}
-                          {isLogin==="TRUE" && IsLoginTrue.map(s=> (
+                          {isLogin===true && IsLoginTrue.map(s=> (
                                         <TopButton key={s.name} onClick={()=>onChangePage(s.name)}>
                                             {s.name}
                                         </TopButton>
@@ -552,9 +565,9 @@ const Main= () =>{
                 </Body>
                 <ChatButton onClick={onChat}/>                
                     <Chat style={{height: `${openChat}px`}}>
-                            {isChatLoginNow != "" && <ChatSocket/>}
-                            {isChatLoginNow === "" && <ChatEmpty/>}
-                            <button className="sendButton" onClick={()=>chatTest()}>채팅 시작하기</button>
+                            {onChatOpen === true && <ChatSocket/>}
+                            {onChatOpen === false && <button className="sendButton" onClick={chatTest}>채팅 시작하기</button>}
+
                     </Chat>
                 <Foot>
                     <div className="topFoot">

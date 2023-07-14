@@ -14,20 +14,18 @@ const Container = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-
-
 `
 
 const Mainboby=styled.div`
     margin: 0px 40px 0px 40px;
-    `
+
+`
+
 
 const Article = styled.div`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-
-
 `
 
 const Container_in = styled.div`
@@ -36,26 +34,34 @@ const Container_in = styled.div`
     margin-left: 10px;
 
 
+
     .blur {
         filter: blur(5px); /* 흐릿한 효과를 원하는 정도로 조절합니다. */
     }
 
     img{
+        margin-left: 40px;
         height: 400px;
     }
 
+    .info{
+        margin-left: 40px;
+    }
+
     .logo{
+        margin-left: 40px;
         width: 200px;
         font-size: 15px;
         font-weight:bolder;
+
     }
 
     .price{
+        margin-left: 40px;
         width: 200px;
         font-size: 10px;
     }
 `;
-
 
 
 const Filter = styled.div`
@@ -111,7 +117,7 @@ const Bottom = () => {
         const getProduct = async() => {
            const rsp = await AxiosFinal.sellitems();
            if (rsp.status === 200) {
-            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'bottom');
+            const filteredProduct = rsp.data.filter((item) => item.productCategory === 'BOTTOM');
              setProduct(filteredProduct);
         };
        };

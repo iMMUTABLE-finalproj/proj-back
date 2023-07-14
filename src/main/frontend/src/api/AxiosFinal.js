@@ -120,11 +120,20 @@ const AxiosFinal = {
             }
      },
     //어드민페이지 회원 선택 삭제
-    customerDelete : async(userId) => {
+    customerDelete : async(userId,token) => {
         const deleteUser={
             userId : userId
         };
-        return await axios.post(Final_proj + "/admin/deleteUser", deleteUser);
+        try{
+            return await axios.post(Final_proj + "/admin/deleteUser", deleteUser,{
+                headers:{
+                         'Content-Type': 'application/json',
+                         'Authorization': 'Bearer ' + token
+                }
+            });
+        }catch(error){
+                 return error.response.status;
+        }
     },
      //어드민페이지 qna 전체조회
      qnaLoadManage : async(token) => {
@@ -140,13 +149,22 @@ const AxiosFinal = {
          }
       },
     //어드민페이지에 qna답변달기
-    qnaUploadReply : async(qnaId,statue,reply)=>{
-        const qnaReplyUpLoad={
-            qnaId : qnaId,
-            qnaStatue : statue,
-            qnaReplay : reply
-        };
-        return await axios.post(Final_proj + "/admin/qnaUpload", qnaReplyUpLoad);
+    qnaUploadReply : async(qnaId,statue,reply,token)=>{
+            const qnaReplyUpLoad={
+                qnaId : qnaId,
+                qnaStatue : statue,
+                qnaReplay : reply
+            };
+          try{
+              return await axios.post(Final_proj + "/admin/qnaUpload", qnaReplyUpLoad,{
+                 headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                 }
+              });
+            }catch(error){
+                return error.response.status;
+          }
     },
     //어드민페이지 주문건 전체조회
     orderLoadManage : async(token) => {

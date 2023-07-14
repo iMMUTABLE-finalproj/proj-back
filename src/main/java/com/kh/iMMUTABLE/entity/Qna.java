@@ -22,29 +22,20 @@ public class Qna {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private long qnaId;
-
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
-
     @Column(nullable = false)
     private String qnaTitle;
-
     @Column(nullable = false)
     private String qnaContent;
     private String qnaPwd;
     private LocalDate qnaDate;
     @Enumerated(EnumType.STRING)
     private QnaStatus qnaStatus;
-
-
     private String reply;
-
-//    @OneToOne(mappedBy = "qna", fetch = FetchType.LAZY)
-//    private Reply reply;
 
 }

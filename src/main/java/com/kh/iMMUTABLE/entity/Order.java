@@ -25,21 +25,16 @@ public class Order {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private Users user;
-
     @Column(nullable = false)
     private String orderAddress;
     private LocalDate orderDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
-
     private String productName;
-
     private String productColor;
     @Enumerated(EnumType.STRING)
     private SizeStatus sizeStatus;
@@ -47,10 +42,8 @@ public class Order {
     private int totalPrice;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus=OrderStatus.CHECK;
-
     private String shipCompany;
     private int shipCode;
-
     private int count;
     private int productPrice;
     private String orderName;
