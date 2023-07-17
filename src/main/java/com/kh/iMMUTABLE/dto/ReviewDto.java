@@ -19,4 +19,7 @@ public class ReviewDto {
     private long userId;
     private long orderId;
     private String userName;
+    private String productImgFst;
+    private String productName;
+    private String productSize;
 }

@@ -558,8 +558,20 @@ const AxiosFinal = {
     // 제품 별 리뷰 불러오기
     viewReview : async(productName) => {
         return await axios.get(Final_proj + `/review/viewReview?productName=${productName}`);
+    },
+
+    // 내가 쓴 리뷰 보기
+    myReview : async(id) => {
+        return await axios.get(Final_proj + `/review/myReview?id=${id}`);
+    },
+
+    // 내가 쓴 리뷰 삭제
+    deleteMyReview : async(reviewId) => {
+        const deleteReview = {
+            reviewId : reviewId
+        }
+        return await axios.post(Final_proj + "/review/deleteReview", deleteReview);
     }
-    
 };
 
 export default AxiosFinal;

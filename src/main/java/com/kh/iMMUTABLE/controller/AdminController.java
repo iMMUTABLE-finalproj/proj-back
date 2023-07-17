@@ -1,10 +1,6 @@
 package com.kh.iMMUTABLE.controller;
 
 import com.kh.iMMUTABLE.dto.*;
-import com.kh.iMMUTABLE.entity.ChatList;
-import com.kh.iMMUTABLE.entity.Order;
-import com.kh.iMMUTABLE.entity.Qna;
-import com.kh.iMMUTABLE.entity.Users;
 import com.kh.iMMUTABLE.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

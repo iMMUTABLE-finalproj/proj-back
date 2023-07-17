@@ -16,14 +16,12 @@ const Container = styled.div`
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
 `;
 
 const InnerContainer = styled.div`
     width: 100%;
-    height: 100vh;
     margin-top: 50px;
 
     .product {
@@ -165,7 +163,7 @@ const ReviewTable = styled.table`
             width: 10%;
         }
         .Title {
-            width: 50%;
+            width: 40%;
         }
         .User, .Date {
             width: 20%;
@@ -184,6 +182,7 @@ const ReviewTable = styled.table`
     }
     .reviewContent {
         font-size: 14px;
+        background-color: whitesmoke;
         .content {
             margin: 10px 60px;
         }
@@ -234,7 +233,7 @@ const QnATable = styled.table`
             width: 40%;
         }
         .User, .Date {
-            width: 15%;
+            width: 20%;
         }
         td {
             text-align: center;
@@ -249,6 +248,7 @@ const QnATable = styled.table`
         }
     }
     .qnaContent {
+        background-color: whitesmoke;
         font-size: 14px;
         .content {
             margin: 10px 60px;
@@ -416,7 +416,7 @@ const ProductInfo = () => {
                 <FaStar
                 icon = {FaStar}
                 key={i}
-                style={{color: i < rating ? 'black' : 'gray'}}
+                style={{color: i < rating ? 'black' : 'lightgray'}}
                 />
             );
         }
@@ -474,7 +474,7 @@ const ProductInfo = () => {
                         <div className="reviewBoard">Review</div>
                         <hr />
                         <ReviewTable>
-                            <tbody>
+                            <thead>
                                 <tr>
                                     <th className="Num">NUM</th>
                                     <th className="Rate">RATE</th>
@@ -482,7 +482,7 @@ const ProductInfo = () => {
                                     <th className="User">USER</th>
                                     <th className="Date">DATE</th>
                                 </tr>
-                            </tbody>
+                            </thead>
                             <tbody>
                                 {sortedReviewData.length > 0 ?
                                 (sortedReviewData.slice(reviewOffset, reviewOffset+reviewLimit).map((e, index) => (
@@ -528,7 +528,7 @@ const ProductInfo = () => {
                         <Modal open={modalOpen} close={closeModal} header="문의 작성"/>
                         <hr />
                         <QnATable>
-                            <tbody>
+                            <thead>
                                 <tr>
                                     <th className="Num">NUM</th>
                                     <th className="Status">STATUS</th>
@@ -536,6 +536,8 @@ const ProductInfo = () => {
                                     <th className="User">USER</th>
                                     <th className="Date">DATE</th>
                                 </tr>
+                            </thead>
+                                <tbody>
                                 {sortedQnaData.length > 0 ? (
                                 sortedQnaData.slice(offset, offset+limit).map((e, index) => (
                                 <React.Fragment key={index}>
@@ -563,7 +565,7 @@ const ProductInfo = () => {
                                     <td className="noQna" colSpan={5}>문의가 없습니다.</td>
                                     </tr>
                                 )}
-                            </tbody>
+                                </tbody>
                         </QnATable>
                     </div>
                     <Pagenation
@@ -573,8 +575,6 @@ const ProductInfo = () => {
                         setPage={setPage}      // 페이지 번호를 변경
                             />
                 </QnA>
-
-
             </InnerContainer>
 
         </Container>

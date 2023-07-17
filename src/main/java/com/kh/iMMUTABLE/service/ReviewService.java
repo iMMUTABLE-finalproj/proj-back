@@ -80,4 +80,34 @@ public class ReviewService {
         }
         return reviewDtoList;
     }
+
+    // 내가 쓴 리뷰 불러오기
+    public List<ReviewDto> myReview(String id) {
+        Users users = userRepository.findByUserEmail(id);
+        long userId = users.getUserId();
+        List<Review> reviewList = reviewRepository.findByUserUserId(userId);
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+
+        for(Review review : reviewList) {
+            ReviewDto reviewDto = new ReviewDto();
+            reviewDto.setReviewId(review.getReview_id());
+            reviewDto.setReviewTitle(review.getReview_title());
+            reviewDto.setReviewContent(review.getReview_content());
+            reviewDto.setReviewRate(review.getReview_rate());
+            reviewDto.setUserName(review.getUser().getUserName());
+            reviewDto.setReviewDate(review.getReview_date());
+            reviewDto.setProductName(review.getProduct().getProductName());
+            reviewDto.setProductImgFst(review.getProduct().getProductImgFst());
+            reviewDto.setProductSize(review.getProduct().getSizeStatus().toString());
+            reviewDtoList.add(reviewDto);
+        }
+        return reviewDtoList;
+    }
+
+    // 내가 쓴 리뷰 삭제하기
+    public boolean deleteReview (String reviewId) {
+        long id = Long.parseLong(reviewId);
+        reviewRepository.deleteById(id);
+        return true;
+    }
 }

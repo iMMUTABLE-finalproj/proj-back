@@ -167,13 +167,20 @@ const Modal = (props) => {
     }
     
     const onClickUpdate = async(productId, userEmail, inputTitle, inputContent) => {
-        const response = await AxiosFinal.qnaUpdate(productId, userEmail, inputTitle, inputContent);
-        if(response.data) {
-            alert("QnA 작성이 완료되었습니다");
-            close();
+        if(inputTitle === "" || inputContent === "") {
+            alert("제목과 내용 모두 입력해주세요");
+            return;
         } else {
-            alert("QnA 작성에 실패하였습니다");
+            const response = await AxiosFinal.qnaUpdate(productId, userEmail, inputTitle, inputContent);
+            if(response.data) {
+                alert("QnA 작성이 완료되었습니다");
+                close();
+            } else {
+                alert("QnA 작성에 실패하였습니다");
+            }
         }
+        setInputTitle("");
+        setInputContent("");
     }
 
     useEffect(()=> {

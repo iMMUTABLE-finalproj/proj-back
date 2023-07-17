@@ -15,11 +15,9 @@ public class Like {
     @Column(name = "like_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long like_id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;

@@ -15,7 +15,6 @@ public class Faq {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "faq_id")
     private long faqId;
-
     private String faqTitle;
     @Lob
     private String faqContent;

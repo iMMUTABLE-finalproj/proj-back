@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import ChatAxios from "../api/ChatAxios.js";
+
 const Container=styled.div`
 .bodyArea{
     width:300px;
-    height:100vh;
+    height:650px;
     display:flex;
     flex-direction: column;
-    border: 1px solid black;
 }
 .chatHeadArea{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     background-color: #CCC;
 }
 .chatContentArea{
@@ -83,23 +84,30 @@ const Container=styled.div`
      height: 25px;
      font-size: 11px;
      color: white;
+     border:none;
      background-color: black;
-     border: orange;
      &:hover{
         color:#CCC;
      }
 }
-.msg_close {
-     width: 20px;
-     font-size: 15px;
+.msg_ready{
+     width: 100px;
+     height: 25px;
+     font-size: 11px;
+     color: white;
+     border:none;
+     background-color: #CCC;
+}
+.chatClose {
+     width: 100%;
+     height: 40px;
+     font-size: 11px;
      background-color: white;
      border: none;
      &:hover{
      background-color:black;
      color:white;
      }
-
-
 }
 `
 const ChatSocket = () => {
@@ -121,14 +129,18 @@ const ChatSocket = () => {
     }
 
     const onClickMsgSend = (e) => {
-        e.preventDefault();
-        ws.current.send(
-            JSON.stringify({
-            "type":"TALK",
-            "roomId": roomId,
-            "sender": sender,
-            "message":inputMsg}));
-            setInputMsg("");
+        if(inputMsg===""){
+        alert("empty contents!!!");
+        }else{
+            e.preventDefault();
+            ws.current.send(
+                JSON.stringify({
+                "type":"TALK",
+                "roomId": roomId,
+                "sender": sender,
+                "message":inputMsg}));
+                setInputMsg("");
+        }
     }
     const onClickMsgClose = () => {
         ws.current.send(
@@ -138,7 +150,11 @@ const ChatSocket = () => {
             "sender":sender,
             "message":"종료 합니다."}));
         ws.current.close();
+        alert("채팅을 종료합니다.")
+    }
+    const onMsgClose =async()=>{
         window.localStorage.removeItem("chatRoomId");
+        const response = await ChatAxios.removeChatData(roomId);
     }
 
     useEffect(() => {
@@ -172,12 +188,13 @@ const ChatSocket = () => {
     useEffect(() => {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }, [items]);
+
     return (
         <Container>
             <div className="bodyArea">
                 <div className="chatHeadArea">
+                    <button className="chatClose" onClick={()=>{onClickMsgClose();onMsgClose();}}>chat close</button>
                     <div>Chatting Connected : {`${socketConnected}`}</div>
-                    <button className="msg_close" onClick={onClickMsgClose}>&times;</button>
                 </div>
                 <div className="chatContentArea">
                     {items.map((item) => {
@@ -197,7 +214,8 @@ const ChatSocket = () => {
                 </div>
                 <div className="sendArea">
                     <input className="msg_input" placeholder="내용을 입력하세요" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
-                    <button className="msg_send" onClick={onClickMsgSend}>전송</button>
+                    {inputMsg != "" && <button className="msg_send" onClick={onClickMsgSend}>전송</button>}
+                    {inputMsg === "" && <button className="msg_ready" disabled='disabled'>전송</button>}
                 </div>
             </div>
         </Container>

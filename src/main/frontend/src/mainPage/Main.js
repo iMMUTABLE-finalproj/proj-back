@@ -103,6 +103,9 @@ const Head = styled.div`
         padding: 0 20px 0 10px;
         display: flex;
         justify-content: space-between;
+        @media only screen and ( max-width: 390px){
+           flex-direction: column;
+        }
     }
     .top1{
         height: 70px;
@@ -202,12 +205,15 @@ const Chat =styled.div`
     bottom: 6rem;
     right: 2rem;
     background-color: rgba(255,255,255,0.8);
-    border-left: 2px solid #CCC;
     //그래야 안에 들어간 컨텐츠들이 사라진다.
     overflow: hidden;
     transition: height 0.35s ease;
     display: flex;
     flex-direction: column;
+     @media only screen and ( max-width: 390px){
+            right: 3rem;
+            bottom: 3.5em;
+        }
     //채팅 send기능 버튼
     .sendButton{
         width: 100%;
@@ -233,6 +239,10 @@ const ChatButton=styled.button`
     background-position: 40%;
     border: none;
     background-color: white;
+    @media only screen and ( max-width: 390px){
+        right: 1rem;
+        bottom: 0.3rem;
+    }
 `
 
 //카트 영역
@@ -410,6 +420,7 @@ const Main= () =>{
             console.log(res.data);
             window.localStorage.setItem("chatRoomId", res.data);
             setOnChatOpen(true);
+            const roomData = await ChatAxios.saveChatData(window.localStorage.getItem("chatRoomId"),window.localStorage.getItem("userIdSuv"));
         } catch(error) {
             console.log(error);
         }
