@@ -17,13 +17,14 @@ const Container = styled.div`
     overflow-y: scroll;
 `;
 const InerContainer = styled.div`
-display: flex;
-flex-direction:column;
-width: 400px;
-height: 750px;
-a{  
-    width: 398px;
-    height: 40px;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  width: 400px;
+  height: 750px;
+  a{
+    width: 100%;
+    height: 38px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,46 +34,53 @@ a{
     color: black;
     background-color: white;
     &:hover{
-        background-color: black;
-        color:white;
+      background-color: black;
+      color:white;
     }
-}
-.top{
+    @media only screen and ( max-width: 390px){
+      width: 380px;
+      margin-left: 4px;
+    }
+  }
+  .top{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 10px;
 
-}
-.input {
-   width: 100%;
-}
-input {
+  }
+  .input {
+    width: 100%;
+  }
+  input {
     width: 395px;
     height: 40px;
     margin-top: 20px;
     font-size: 10px;
     border: 1px solid #ccc;
     &::placeholder {
-        padding: 5px;
-        font-size: 10px;
+      padding: 5px;
+      font-size: 10px;
     };
-}
-.emailBtn,
-.verifyBtn,
-.addrBtn { 
+    @media only screen and ( max-width: 390px){
+      width: 380px;
+    }
+  }
+  .emailBtn,
+  .verifyBtn,
+  .addrBtn {
     text-align: right;
-    width: 50px;   
+    width: 50px;
     font-size: 10px;
     background-color: white;
     border: none;
     &:hover{
-        color: #CCC;
+      color: #CCC;
     }
     margin-bottom : 10px
-}
-.singUp {
+  }
+  .singUp {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,34 +88,34 @@ input {
     /* height: 38px; */
     margin-top: 20px;
     background-color: white;
-}
+  }
 
-.hint {
-        width: 100%;
-      display: flex;
-      margin: 5px 0px 0px 8px;
-      justify-content:right;
-      align-items:center;
-      font-size: 12px;
-      color: #999;
-}
-.addrFind {
+  .hint {
+    width: 100%;
+    display: flex;
+    margin: 5px 0px 0px 8px;
+    justify-content:right;
+    align-items:center;
+    font-size: 12px;
+    color: #999;
+  }
+  .addrFind {
     margin-right: 10px;
     width: 170px;
-}
+  }
 
-.addrBtn {
+  .addrBtn {
     height: 40px;
-}
+  }
 
-.success {
+  .success {
     color: royalblue;
-}
+  }
 
-.error {
+  .error {
     color: red;
-}
-.enable-button {
+  }
+  .enable-button {
     font-size: 10px;
     /* font-weight: bold; */
     margin-bottom: 20px;
@@ -115,8 +123,11 @@ input {
     height: 38px;
     color: white;
     background-color: black;
-}
-.enable-button:active {
+    @media only screen and ( max-width: 390px){
+      width: 380px;
+    }
+  }
+  .enable-button:active {
     font-size: 10px;
     /* font-weight: bold; */
     width: 100%;
@@ -124,10 +135,13 @@ input {
     color: white;
     background-color: black;
     &:hover {
-        border: 1px solid black;
+      border: 1px solid black;
     }
-}
-.disable-button {
+    @media only screen and ( max-width: 390px){
+      width: 380px;
+    }
+  }
+  .disable-button {
     width: 100%;
     height: 38px;
     margin-bottom: 20px;
@@ -136,9 +150,12 @@ input {
     background-color: white;
     border: 1px solid black;
     &:hover{
-        color: #CCC;
+      color: #CCC;
     }
-}
+    @media only screen and ( max-width: 390px){
+      width: 380px;
+    }
+  }
 `;
 
 const SignUp = () => {

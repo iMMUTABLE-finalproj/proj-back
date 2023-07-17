@@ -8,104 +8,104 @@ import { UserContext } from "../context/UserInfo";
 
 
 const Container = styled.div`
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 `;
 
 
 const InnerContainer = styled.div`
-    width: 100%;
-    margin-top: 50px;
-    .header {
-        margin: 0 40px;
-        font-size: 25px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
+  width: 100%;
+  margin-top: 50px;
+  .header {
+    margin: 0 40px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
 `;
 
 const Product = styled.div`
-    width: 100%;
-    .wrapper {
-        margin: 40px 40px;
+  width: 100%;
+  .wrapper {
+    margin: 40px 40px;
+    display: flex;
+    .product {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      .imgName {
         display: flex;
-        .product {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            .imgName {
-                display: flex;
-                flex-direction: column;
-                img {
-                    width: 400px;
-                    height: 400px;
-                    object-fit: cover;
-                }
-                .Name {
-                    display: flex;
-                    margin-top: 30px;
-                    font-size: 20px;
-                    justify-content: center;
-                    font-weight: bolder;
-                }
-            }
+        flex-direction: column;
+        img {
+          width: 400px;
+          height: 400px;
+          object-fit: cover;
         }
-        .content {
-            width: 50%;
-            .star{
-                margin-bottom: 50px;
-                & svg {
-                    color: #e6e6e6;
-                    cursor: pointer;
-                }
-                /* :hover svg {
-                    color: black;
-                } */
-                /* & svg:hover ~ svg {
-                    color: #e6e6e6;
-                } */
-                .black {
-                    color: black;
-                }
-            }
-            .Title {
-                margin: 20px 0;
-                display: flex;
-                .title {
-                    font-size: 14px;
-                    width: 20%;
-                }
-                input {
-                    width: 400px;
-                }
-            }
-            .rvCon {
-                margin-bottom: 20px;
-                display: flex;
-                .rvContent {
-                    width: 20%;
-                    font-size: 14px;
-                }
-                textarea {
-                    width: 400px;
-                    height: 200px;
-                    resize: none;
-                }
-            }
-            .Btn {
-                display: flex;
-                justify-content: center;
-                button {
-                width: 410px;
-                height: 40px;
-                background-color: black;
-                color: white;
-                outline: none;
-                cursor: pointer;
-                }
-            }
+        .Name {
+          display: flex;
+          margin-top: 30px;
+          font-size: 20px;
+          justify-content: center;
+          font-weight: bolder;
         }
+      }
     }
+    .content {
+      width: 50%;
+      .star{
+        margin-bottom: 50px;
+        & svg {
+          color: #e6e6e6;
+          cursor: pointer;
+        }
+        /* :hover svg {
+            color: black;
+        } */
+        /* & svg:hover ~ svg {
+            color: #e6e6e6;
+        } */
+        .black {
+          color: black;
+        }
+      }
+      .Title {
+        margin: 20px 0;
+        display: flex;
+        .title {
+          font-size: 14px;
+          width: 20%;
+        }
+        input {
+          width: 400px;
+        }
+      }
+      .rvCon {
+        margin-bottom: 20px;
+        display: flex;
+        .rvContent {
+          width: 20%;
+          font-size: 14px;
+        }
+        textarea {
+          width: 400px;
+          height: 200px;
+          resize: none;
+        }
+      }
+      .Btn {
+        display: flex;
+        justify-content: center;
+        button {
+          width: 410px;
+          height: 40px;
+          background-color: black;
+          color: white;
+          outline: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 `;
 
 const Review = () => {
@@ -171,7 +171,7 @@ const Review = () => {
             <MyPageHeader />
             <InnerContainer>
                 <div className="header">후기 작성
-                <hr />
+                    <hr />
                 </div>
                 <Product>
                     <div className="wrapper">
@@ -184,9 +184,9 @@ const Review = () => {
                         <div className="content">
                             <div className="star">{array.map((e)=> (
                                 <FaStar key={e}
-                                onClick={()=> starClick(e)}
-                                className={clicked[e] && 'black'}
-                                size="30"
+                                        onClick={()=> starClick(e)}
+                                        className={clicked[e] && 'black'}
+                                        size="30"
                                 />
                             ))}</div>
                             <div className="Title">

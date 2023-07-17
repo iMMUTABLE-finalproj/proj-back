@@ -39,6 +39,9 @@ const InerContainer = styled.div`
             padding: 5px;
             font-size: 10px;
         };
+      @media only screen and ( max-width: 390px){
+        width: 380px;
+      }
     }
     .findPwdBtn,
     .findBtn {

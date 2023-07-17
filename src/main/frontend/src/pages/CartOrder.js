@@ -59,57 +59,57 @@ const Container = styled.div`
     font-size: 13px;
     font-weight: bold;
   }
-//  .payBtn {
-//    margin-top: 10px;
-//    width: 400px;
-//    height: 40px;
-//    background-color: white;
-//    border: 1px solid black;
-//    &:hover{
-//      color: #CCC;
-//      background-color: black;
-//    }
-//    margin-bottom : 10px
-//  }
-//  a {
-//    text-decoration: none;
-//    font-size: 13px;
-//    color: black;
-//    justify-content: center;
-//    text-align: center;
-//    line-height: 40px;
-//  }
-    .payBtn {
-        margin-top: 10px;
-        width: 400px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        background-color: white;
-        border: 1px solid black;
-        margin-bottom: 10px;
-      }
+  //  .payBtn {
+  //    margin-top: 10px;
+  //    width: 400px;
+  //    height: 40px;
+  //    background-color: white;
+  //    border: 1px solid black;
+  //    &:hover{
+  //      color: #CCC;
+  //      background-color: black;
+  //    }
+  //    margin-bottom : 10px
+  //  }
+  //  a {
+  //    text-decoration: none;
+  //    font-size: 13px;
+  //    color: black;
+  //    justify-content: center;
+  //    text-align: center;
+  //    line-height: 40px;
+  //  }
+  .payBtn {
+    margin-top: 10px;
+    width: 400px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid black;
+    margin-bottom: 10px;
+  }
 
-      .payBtn:hover {
-        background-color: black;
-        color: white;
-      }
-      a {
-        text-decoration: none;
-        font-size: 13px;
-        color: black;
-        justify-content: center;
-        text-align: center;
-        line-height: 40px;
-          }
-      .payBtn:hover a {
-        color: white;
-      }
-      .productContainer {
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 20px;
-      }
+  .payBtn:hover {
+    background-color: black;
+    color: white;
+  }
+  a {
+    text-decoration: none;
+    font-size: 13px;
+    color: black;
+    justify-content: center;
+    text-align: center;
+    line-height: 40px;
+  }
+  .payBtn:hover a {
+    color: white;
+  }
+  .productContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
 `;
 
 const ProductContainer = styled.div`
@@ -147,33 +147,33 @@ const ProductContainer = styled.div`
 `;
 
 const Footer = styled.div`
-    margin-top: 20px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  .fotbox{
+    height: 100px;
+  }
+
+  .tt1{
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    
-    .fotbox{
-        height: 100px;
-    }
-
-    .tt1{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #8b9192;
-        font-size: 14px;
-        font-weight: 600;
-    }
+    color: #8b9192;
+    font-size: 14px;
+    font-weight: 600;
+  }
 
 
-    .tt2{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #c1c2c8;
-        font-size: 12px;
-    }
+  .tt2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c1c2c8;
+    font-size: 12px;
+  }
 
 `
 
@@ -209,39 +209,39 @@ const CartOrder = () => {
         setIsPopupOpen(true);
     }
 
-	// 팝업창 닫기
+    // 팝업창 닫기
     const closePostCode = (e) => {
         setIsPopupOpen(false);
     }
 
 
     useEffect(() => {
-            console.log(cartId);
-            const getOrderList = async() => {
-                const response = await AxiosFinal.realOrderList(cartId);
-                console.log(response.data);
-                setOrder(response.data);
-            };
-            getOrderList();
+        console.log(cartId);
+        const getOrderList = async() => {
+            const response = await AxiosFinal.realOrderList(cartId);
+            console.log(response.data);
+            setOrder(response.data);
+        };
+        getOrderList();
 
-            const getUser = async() => {
-                const response = await AxiosFinal.orderGetUser(cartId);
-                setUser(response.data);
-                setInputName(response.data.userName);
-                setInputEmail(response.data.userEmail);
-                setInputPhone(response.data.userPhone);
-                setAddr(response.data.userAddr)
-            }
-            getUser();
+        const getUser = async() => {
+            const response = await AxiosFinal.orderGetUser(cartId);
+            setUser(response.data);
+            setInputName(response.data.userName);
+            setInputEmail(response.data.userEmail);
+            setInputPhone(response.data.userPhone);
+            setAddr(response.data.userAddr)
+        }
+        getUser();
 
-            // totalPrcie 가져오기
-            const handleTotalPrice = async() => {
-                const response = await AxiosFinal.getTotalPrice(cartId);
-                setTotalPrice(response.data);
-                console.log(totalPrice);
-            }
-            handleTotalPrice();
-        },[]);
+        // totalPrcie 가져오기
+        const handleTotalPrice = async() => {
+            const response = await AxiosFinal.getTotalPrice(cartId);
+            setTotalPrice(response.data);
+            console.log(totalPrice);
+        }
+        handleTotalPrice();
+    },[]);
 
     const onClickHeader = () => {
         navigate("/");
@@ -296,35 +296,35 @@ const CartOrder = () => {
     //카카오 결제로 들어가는 axios
     const handlePayment1m = async () => {
         console.log(payUrl);
-          try {
+        try {
             const items = order.map((cartItem) => ({
                 item_name: cartItem.productName,
                 product_price: cartItem.productPrice
-              }));
+            }));
             const descItemName = items.length > 1 ? `${items[0].item_name} 외 ${items.length-1}개` : items[0].item_name;
             const totalPrice = items.reduce((acc, cartItem)=> acc + cartItem.product_price, 0);
             // const totalCount = items.reduce((acc, cartItem)=> acc + cartItem.count, 0);
 
             const response = await axios.post(
-              'https://kapi.kakao.com/v1/payment/ready',
-              {
-                cid: 'TC0ONETIME', // 가맹점 CID
-                partner_order_id: 'partner_order_id', // 가맹점 주문번호
-                partner_user_id: 'partner_user_id', // 가맹점 회원 ID
-                item_name: descItemName,
-                quantity: 30,
-                total_amount: totalPrice, // 결제 금액
-                tax_free_amount: 0,
-                approval_url: 'http://localhost:8111/OrderComplete', // 결제 성공 시 리다이렉트할 URL
-                cancel_url: 'http://localhost:8111/CartOrder', // 결제 취소 시 리다이렉트할 URL
-                fail_url: 'http://localhost:8111/CartOrder', // 결제 실패 시 리다이렉트할 URL
-              },
-              {
-                headers: {
-                  Authorization: `KakaoAK 3923bafc46ca0d258af73bbf339e36d4`, // admin key
-                  "Content-type": `application/x-www-form-urlencoded;charset=utf-8`
+                'https://kapi.kakao.com/v1/payment/ready',
+                {
+                    cid: 'TC0ONETIME', // 가맹점 CID
+                    partner_order_id: 'partner_order_id', // 가맹점 주문번호
+                    partner_user_id: 'partner_user_id', // 가맹점 회원 ID
+                    item_name: descItemName,
+                    quantity: 30,
+                    total_amount: totalPrice, // 결제 금액
+                    tax_free_amount: 0,
+                    approval_url: 'http://localhost:8111/OrderComplete', // 결제 성공 시 리다이렉트할 URL
+                    cancel_url: 'http://localhost:8111/CartOrder', // 결제 취소 시 리다이렉트할 URL
+                    fail_url: 'http://localhost:8111/CartOrder', // 결제 실패 시 리다이렉트할 URL
                 },
-              }
+                {
+                    headers: {
+                        Authorization: `KakaoAK b630886b504618fa3d906332fdbdb75e`, // admin key
+                        "Content-type": `application/x-www-form-urlencoded;charset=utf-8`
+                    },
+                }
             );
             console.log(response.data); // 결제 요청 결과 확인
             console.log(response.data.next_redirect_pc_url);
@@ -332,15 +332,15 @@ const CartOrder = () => {
             window.localStorage.setItem("tid", response.data.tid);
             setPayUrl(response.data.next_redirect_pc_url);
         } catch (error) {
-        console.error("에러입니다1.");
-        console.error(error);
+            console.error("에러입니다1.");
+            console.error(error);
         }
-      };
+    };
 
-      const clickOrder = async() => {
+    const clickOrder = async() => {
         const rsp = await AxiosFinal.orderPlace(cartId, inputName, inputEmail, inputPhone, addr);
         console.log(rsp.data);
-      }
+    }
 
 
     return(
@@ -366,21 +366,21 @@ const CartOrder = () => {
             <input type="name" className="billingInput" defaultValue={user.userName} onChange={onChangeName}/>
             <input type="email" className="billingInput" defaultValue={user.userEmail}  onChange={onChangeMail}/>
             <div className="hint">
-                        {inputEmail.length > 0 && (
-                        <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
-                    </div>
+                {inputEmail.length > 0 && (
+                    <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
+            </div>
             <input type="address" className="billingInput" value={addr}/>
             <button className="addrBtn" onClick={openPostCode}>FIND</button>
             <div id='popupDom'>
-                            {isPopupOpen && (
-                                    <PopupPostCode onClose={closePostCode}/>
-                            )}
-                        </div>
+                {isPopupOpen && (
+                    <PopupPostCode onClose={closePostCode}/>
+                )}
+            </div>
             <input type="phone" className="billingInput" defaultValue={user.userPhone} onChange={onChangePhone}/>
             <div className="hint">
-                            {inputPhone.length > 0 && (
-                            <span className={`message ${isPhone ? 'success' : 'error'}`}>{phoneMessage}</span>)}
-                    </div>
+                {inputPhone.length > 0 && (
+                    <span className={`message ${isPhone ? 'success' : 'error'}`}>{phoneMessage}</span>)}
+            </div>
             <div className="item">PAYMENT</div>
             <hr />
             <div className="payBtn" onMouseOver={handlePayment1m}>

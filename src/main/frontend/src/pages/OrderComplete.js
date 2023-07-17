@@ -2,38 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import {Link, useLocation} from "react-router-dom";
 import axios from "axios";
+import {Button} from "react-bootstrap";
+
 const Container = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  button {
+    width: 300px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid black;
+    color: black;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
-    a {
-        width: 300px;
-        height: 40px;
-        margin-top: 20px;
-        text-decoration: none;
-        border: 1px solid black;
-        color: black;
-        justify-content: center;
-        text-align: center;
-        line-height: 40px;
-        &:hover{
-            color: #CCC;
-            background-color: black;
-        }
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    background-color: white;
+    &:hover{
+      color: white;
+      background-color: black;
     }
-    .header {
-        margin-bottom: 20px;
-        font-weight: bold;
-        font-size: 50px;
-    }
-    .item {
-        font-size: 20px;
-    }
+  }
+  .header {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 50px;
+  }
+  .item {
+    font-size: 20px;
+  }
 `;
+
 
 const OrderComplete = () => {
     const location = useLocation();
@@ -57,7 +61,7 @@ const OrderComplete = () => {
                 },
                 {
                     headers: {
-                        Authorization: `KakaoAK 3923bafc46ca0d258af73bbf339e36d4`,       // 카카오톡 API 접속 로그인 후 내 애플리케이션 Admin키 저장
+                        Authorization: `KakaoAK b630886b504618fa3d906332fdbdb75e`,       // 카카오톡 API 접속 로그인 후 내 애플리케이션 Admin키 저장
                         "Content-type": `application/x-www-form-urlencoded;charset=utf-8`
                     },
                 }
@@ -78,7 +82,10 @@ const OrderComplete = () => {
         <Container>
             <div className="header">iMMUTABLE</div>
             <div className="item">주문이 완료되었습니다.</div>
-            <Link to="/" onChange={handleApprove}>메인으로</Link>
+            <Link to="/Order">
+                <Button  onChange={handleApprove}>주문확인</Button>
+            </Link>
+
         </Container>
     );
 };
